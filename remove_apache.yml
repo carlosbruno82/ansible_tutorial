@@ -7,13 +7,25 @@
   - name: update repository index
     apt:
       update_cache: yes
+    when: ansible_distribution == "Ubuntu"
 
   - name: remove apache2 package
     apt:
       name: apache2
       state: absent
+    when: ansible_distribution == "Ubuntu"
+    
   
   - name: remove php support for apache
     apt:
       name: libapache2-mod-php
       state: absent
+    when: ansible_distribution == "Ubuntu"
+  
+  - name: remove apache e php for CentOS Servers
+    dnf:
+      name:
+        - httpd
+        - php
+      state: absent
+    when: ansible_distribution == "CentOS"
